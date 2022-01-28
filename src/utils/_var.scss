@@ -1,0 +1,16 @@
+$primary:#4B51EF;
+$success:   #52CF4F;
+$fontSize: 18px;
+%textbtn {
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 14px;
+    color: #FFFFFF;
+}
+%btn {
+    border-radius: 5px;
+    outline: none; 
+    border: none;
+}
