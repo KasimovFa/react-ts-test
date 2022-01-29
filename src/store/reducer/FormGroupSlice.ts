@@ -1,26 +1,21 @@
 /* eslint-disable @typescript-eslint/ban-types */
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 
-interface UserState {
-    disabledBtn: boolean;
+interface FormGroupState {
     readonlyInput: boolean;
 }
-const initialState: UserState = {
-    disabledBtn: false,
+const initialState: FormGroupState = {
     readonlyInput: true,
 };
 
 export const formGroupSlice = createSlice({
-    name: 'user',
+    name: 'formGroup',
     initialState,
     reducers: {
-        setDisabled(state, action: PayloadAction<boolean>) {
-            state.disabledBtn = action.payload;
-        },
         setReadonlyInput(state, action: PayloadAction<boolean>) {
             state.readonlyInput = action.payload;
         },
     },
 });
-export const {setDisabled, setReadonlyInput} = formGroupSlice.actions;
+export const {setReadonlyInput} = formGroupSlice.actions;
 export default formGroupSlice.reducer;

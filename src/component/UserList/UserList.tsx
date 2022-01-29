@@ -1,10 +1,23 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import User from '../User/User';
-import React from 'react';
+import React, {useEffect} from 'react';
 import './userList.scss';
-import {useAppSelector} from '../../hooks/hook';
+import {useAppDispatch, useAppSelector} from '../../hooks/hook';
+import {fetchUsers} from '../../store/reducer/ActionCreators';
+import Loader from '../../component/UI/Loader/Loader';
 
 const UserList = () => {
     const {users} = useAppSelector((state) => state.userReducer);
+    const {isLoading} = useAppSelector((state) => state.userReducer);
+    const dispatch = useAppDispatch();
+
+    useEffect(() => {
+        dispatch(fetchUsers());
+    }, []);
+
+    if (isLoading) {
+        return <Loader />;
+    }
     return (
         <div className="userList">
             <div className="userList_wrapper">

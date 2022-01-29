@@ -1,23 +1,29 @@
-import {useAppDispatch} from '../../hooks/hook';
+import {useAppDispatch, useAppSelector} from '../../hooks/hook';
 import React, {useEffect} from 'react';
 import './userprofile.scss';
-import {fetchUsersOne} from '../../api/UserApi';
 import {useParams} from 'react-router-dom';
 import Button from '../UI/Button/Button';
 import FormGroup from '../UI/FormGroup/FormGroup';
 import {setReadonlyInput} from '../../store/reducer/FormGroupSlice';
+import {fetchUser} from '../../store/reducer/ActionCreators';
+import Loader from '../../component/UI/Loader/Loader';
 
 const UserProfile = () => {
     const dispatch = useAppDispatch();
+    const {isLoading} = useAppSelector((state) => state.userReducer);
     const {userId} = useParams();
     useEffect(() => {
-        dispatch(fetchUsersOne(userId));
+        dispatch(fetchUser(userId));
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
     // eslint-disable-next-line @typescript-eslint/no-empty-function
     const editForm = () => {
         dispatch(setReadonlyInput(false));
     };
+
+    if (isLoading) {
+        return <Loader />;
+    }
 
     return (
         <div className="userProfile">

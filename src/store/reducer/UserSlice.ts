@@ -1,7 +1,8 @@
+/* eslint-disable prettier/prettier */
 /* eslint-disable @typescript-eslint/ban-types */
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {IUser} from '../../models/IUser';
-import {fetchUsers} from './ActionCreators';
+import {fetchUser, fetchUsers} from './ActionCreators';
 
 interface UserState {
     users: IUser[];
@@ -18,9 +19,6 @@ export const userSlice = createSlice({
     name: 'user',
     initialState,
     reducers: {
-        setCurrentUser(state, action: PayloadAction<IUser>) {
-            state.currentUser = action.payload;
-        },
         setUsers(state, action: PayloadAction<IUser[]>) {
             state.users = action.payload;
         },
@@ -39,8 +37,21 @@ export const userSlice = createSlice({
         [fetchUsers.rejected.type]: (state) => {
             state.isLoading = false;
         },
+        [fetchUser.fulfilled.type]: (
+            state,
+            action: PayloadAction<IUser>,
+        ) => {
+            state.isLoading = false;
+            state.currentUser = action.payload;
+        },
+        [fetchUser.pending.type]: (state) => {
+            state.isLoading = true;
+        },
+        [fetchUser.rejected.type]: (state) => {
+            state.isLoading = false;
+        },
     },
 });
 
-export const {setCurrentUser, setUsers} = userSlice.actions;
+export const {setUsers} = userSlice.actions;
 export default userSlice.reducer;
